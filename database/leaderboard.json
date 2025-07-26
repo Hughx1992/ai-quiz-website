@@ -1,0 +1,37 @@
+[
+  {
+    "userId": "1537721c-d02e-4dbf-b2dd-f48259687fe8",
+    "nickname": "电脑 1",
+    "score": 30,
+    "answeredCount": 3,
+    "lastAnswerTime": "2025-07-26T09:32:09.088Z"
+  },
+  {
+    "userId": "7d12cb66-0172-47b5-afba-616438e4d380",
+    "nickname": "HP 1",
+    "score": 10,
+    "answeredCount": 3,
+    "lastAnswerTime": "2025-07-26T09:32:32.474Z"
+  },
+  {
+    "userId": "2d14a5ed-6688-499a-9c60-010f343adfe1",
+    "nickname": "电脑 1",
+    "score": 60,
+    "answeredCount": 8,
+    "lastAnswerTime": "2025-07-26T09:48:43.509Z"
+  },
+  {
+    "userId": "ea5c8ccd-b351-40cd-bb74-b10c3cba2509",
+    "nickname": "HP 1",
+    "score": 0,
+    "answeredCount": 1,
+    "lastAnswerTime": "2025-07-26T09:49:07.728Z"
+  },
+  {
+    "userId": "35d6248c-798a-4504-8da2-ab9534d0331e",
+    "nickname": "电脑 1",
+    "score": 0,
+    "answeredCount": 2,
+    "lastAnswerTime": "2025-07-26T09:54:19.194Z"
+  }
+]

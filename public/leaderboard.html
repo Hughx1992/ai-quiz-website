@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI答题竞赛 - 实时排行榜</title>
+    <link rel="stylesheet" href="css/leaderboard.css">
+</head>
+<body>
+    <div class="leaderboard-container">
+        <header class="leaderboard-header">
+            <h1>🏆 AI答题竞赛实时排行榜</h1>
+            <div class="header-info">
+                <div class="info-item">
+                    <span class="label">在线用户:</span>
+                    <span class="value" id="user-count">0</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">竞赛状态:</span>
+                    <span class="value" id="quiz-status">未开始</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">更新时间:</span>
+                    <span class="value" id="update-time">--:--:--</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="leaderboard-main">
+            <div class="podium-section">
+                <div class="podium">
+                    <!-- 第二名 -->
+                    <div class="podium-place second" id="second-place">
+                        <div class="podium-rank">🥈</div>
+                        <div class="podium-info">
+                            <div class="podium-name">--</div>
+                            <div class="podium-score">0分</div>
+                        </div>
+                        <div class="podium-base second-base">2</div>
+                    </div>
+                    
+                    <!-- 第一名 -->
+                    <div class="podium-place first" id="first-place">
+                        <div class="podium-rank">🥇</div>
+                        <div class="podium-info">
+                            <div class="podium-name">--</div>
+                            <div class="podium-score">0分</div>
+                        </div>
+                        <div class="podium-base first-base">1</div>
+                    </div>
+                    
+                    <!-- 第三名 -->
+                    <div class="podium-place third" id="third-place">
+                        <div class="podium-rank">🥉</div>
+                        <div class="podium-info">
+                            <div class="podium-name">--</div>
+                            <div class="podium-score">0分</div>
+                        </div>
+                        <div class="podium-base third-base">3</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ranking-section">
+                <h2>完整排名</h2>
+                <div class="ranking-list" id="ranking-list">
+                    <div class="no-data">暂无排名数据</div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="leaderboard-footer">
+            <div class="footer-content">
+                <p>🤖 AI答题竞赛系统 | 实时更新中...</p>
+                <div class="connection-status" id="connection-status">
+                    <span class="status-dot"></span>
+                    <span>连接状态: <span id="connection-text">连接中</span></span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- 动画效果 -->
+    <div class="particles" id="particles"></div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/leaderboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI答题竞赛网站</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🤖 AI答题竞赛</h1>
+            <p>扫码参与实时答题，挑战AI知识！</p>
+        </header>
+
+        <main>
+            <div class="qr-section">
+                <h2>扫码参与答题</h2>
+                <div class="qr-container">
+                    <div id="qr-code">
+                        <div class="loading">正在生成二维码...</div>
+                    </div>
+                    <div class="qr-info">
+                        <p>使用手机扫描二维码参与答题</p>
+                        <p>或直接访问：<span id="quiz-url">加载中...</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-section">
+                <div class="stat-card">
+                    <h3>在线用户</h3>
+                    <div class="stat-number" id="user-count">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>题目总数</h3>
+                    <div class="stat-number" id="question-count">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>竞赛状态</h3>
+                    <div class="stat-status" id="quiz-status">未开始</div>
+                </div>
+            </div>
+
+            <div class="leaderboard-section">
+                <h2>🏆 实时排行榜 (前5名)</h2>
+                <div class="leaderboard" id="leaderboard">
+                    <div class="no-data">暂无排名数据</div>
+                </div>
+            </div>
+
+            <div class="actions-section">
+                <button class="btn btn-primary" onclick="refreshQRCode()">刷新二维码</button>
+                <button class="btn btn-secondary" onclick="window.open('/admin', '_blank')">管理员面板</button>
+                <button class="btn btn-secondary" onclick="window.open('/leaderboard', '_blank')">大屏排行榜</button>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 AI答题竞赛网站 | 支持100人同时在线答题</p>
+        </footer>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

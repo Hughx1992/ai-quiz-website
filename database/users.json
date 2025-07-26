@@ -1,0 +1,42 @@
+[
+  {
+    "id": "1537721c-d02e-4dbf-b2dd-f48259687fe8",
+    "socketId": "JSjBrZunU4VEpuLcAAAZ",
+    "nickname": "电脑 1",
+    "score": 0,
+    "answeredQuestions": [],
+    "joinedAt": "2025-07-26T09:30:59.762Z"
+  },
+  {
+    "id": "7d12cb66-0172-47b5-afba-616438e4d380",
+    "socketId": "H5pql277Zjd9mQLGAAAb",
+    "nickname": "HP 1",
+    "score": 0,
+    "answeredQuestions": [],
+    "joinedAt": "2025-07-26T09:31:07.333Z"
+  },
+  {
+    "id": "2d14a5ed-6688-499a-9c60-010f343adfe1",
+    "socketId": "2SIt1rvSS-BGiiIIAAAN",
+    "nickname": "电脑 1",
+    "score": 0,
+    "answeredQuestions": [],
+    "joinedAt": "2025-07-26T09:46:29.953Z"
+  },
+  {
+    "id": "ea5c8ccd-b351-40cd-bb74-b10c3cba2509",
+    "socketId": "2W-PchHBS1QCxODtAAAR",
+    "nickname": "HP 1",
+    "score": 0,
+    "answeredQuestions": [],
+    "joinedAt": "2025-07-26T09:48:35.568Z"
+  },
+  {
+    "id": "35d6248c-798a-4504-8da2-ab9534d0331e",
+    "socketId": "WobLrvD5mj_MkyOtAAAP",
+    "nickname": "电脑 1",
+    "score": 0,
+    "answeredQuestions": [],
+    "joinedAt": "2025-07-26T09:52:54.495Z"
+  }
+]
