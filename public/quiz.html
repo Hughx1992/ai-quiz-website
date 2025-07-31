@@ -3,62 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI答题竞赛 - 答题页面</title>
+    <title>HC SNO Gathering * Cyber AI Quiz - 赛博朋克答题竞赛</title>
+    <link rel="stylesheet" href="css/cyber-theme.css">
     <link rel="stylesheet" href="css/quiz.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <body>
+    <!-- 赛博朋克网格背景 -->
+    <div class="cyber-grid"></div>
+
     <div class="quiz-container">
         <!-- 登录界面 -->
         <div id="login-screen" class="screen active">
-            <div class="login-card">
-                <h1>🤖 AI答题竞赛</h1>
-                <p>欢迎参与AI知识竞赛！</p>
-                
+            <div class="login-card cyber-card hologram">
+                <h1 class="cyber-title large" data-text="◢ HC SNO Gathering * Cyber AI Quiz ◣">◢ HC SNO Gathering * Cyber AI Quiz ◣</h1>
+                <p class="cyber-text">◆ 准备连接到赛博空间 ◆</p>
+
                 <div class="login-form">
-                    <input type="text" id="nickname-input" placeholder="请输入您的昵称" maxlength="20">
-                    <button id="join-btn" class="btn btn-primary">加入竞赛</button>
+                    <input type="text" id="nickname-input" class="cyber-input" placeholder="◆ 输入您的代号..." maxlength="20">
+                    <button id="join-btn" class="cyber-btn primary">
+                        <span>◆ 建立连接</span>
+                    </button>
                 </div>
-                
+
                 <div class="login-info">
-                    <p>💡 提示：输入昵称后点击"加入竞赛"开始答题</p>
+                    <p class="cyber-text dim">◆ 提示：输入代号后建立连接进入赛博空间</p>
                 </div>
+                <div class="data-stream"></div>
             </div>
         </div>
 
         <!-- 等待界面 -->
         <div id="waiting-screen" class="screen">
-            <div class="waiting-card">
-                <h2>等待竞赛开始</h2>
+            <div class="waiting-card cyber-card hologram">
+                <h2 class="cyber-title medium">◢ 等待数据同步 ◣</h2>
                 <div class="waiting-animation">
-                    <div class="spinner"></div>
+                    <div class="cyber-spinner"></div>
                 </div>
-                <p>您已成功加入竞赛！</p>
+                <p class="cyber-text">◆ 连接已建立，等待系统启动 ◆</p>
                 <div class="user-info">
-                    <p>昵称：<span id="user-nickname"></span></p>
-                    <p>当前得分：<span id="user-score">0</span>分</p>
+                    <p class="cyber-text">代号：<span id="user-nickname" class="cyber-text primary"></span></p>
+                    <p class="cyber-text">当前积分：<span id="user-score" class="cyber-text accent">0</span></p>
                 </div>
                 <div class="waiting-stats">
-                    <p>在线用户：<span id="online-users">0</span>人</p>
+                    <p class="cyber-text">在线节点：<span id="online-users" class="cyber-text primary">0</span></p>
                 </div>
+                <div class="data-stream"></div>
             </div>
         </div>
 
         <!-- 答题界面 -->
         <div id="quiz-screen" class="screen">
-            <div class="quiz-header">
+            <div class="quiz-header cyber-card">
                 <div class="quiz-info">
-                    <span class="score">得分: <span id="current-score">0</span></span>
-                    <span class="timer">时间: <span id="timer">30</span>s</span>
+                    <span class="score cyber-text accent">积分: <span id="current-score">0</span></span>
+                    <span class="timer cyber-text danger">时间: <span id="timer">30</span>s</span>
                 </div>
+                <div class="data-stream"></div>
             </div>
 
-            <div class="question-card">
+            <div class="question-card cyber-card hologram">
                 <div class="question-image" id="question-image" style="display: none;">
-                    <img id="question-img" src="" alt="题目图片">
+                    <img id="question-img" src="" alt="数据包图像">
                 </div>
-                
+
                 <div class="question-text">
-                    <h3 id="question-title">题目加载中...</h3>
+                    <h3 id="question-title" class="cyber-title small">◆ 数据包加载中...</h3>
                 </div>
 
                 <div class="options-container" id="options-container">
@@ -66,58 +77,69 @@
                 </div>
 
                 <div class="question-footer">
-                    <button id="submit-btn" class="btn btn-primary" disabled>提交答案</button>
+                    <button id="submit-btn" class="cyber-btn primary" disabled>
+                        <span>◆ 传输答案</span>
+                    </button>
                 </div>
+                <div class="data-stream"></div>
             </div>
         </div>
 
         <!-- 答案结果界面 -->
         <div id="result-screen" class="screen">
-            <div class="result-card">
+            <div class="result-card cyber-card hologram">
                 <div class="result-icon" id="result-icon">
                     <!-- 图标将通过JavaScript设置 -->
                 </div>
-                
+
                 <div class="result-info">
-                    <h3 id="result-title">答题结果</h3>
-                    <p id="result-message">正在计算结果...</p>
+                    <h3 id="result-title" class="cyber-title medium">◢ 传输结果 ◣</h3>
+                    <p id="result-message" class="cyber-text">◆ 正在分析数据包...</p>
                     <div class="score-info">
-                        <p>本题得分：<span id="question-points">0</span>分</p>
-                        <p>总得分：<span id="total-score">0</span>分</p>
+                        <p class="cyber-text">本次积分：<span id="question-points" class="cyber-text accent">0</span></p>
+                        <p class="cyber-text">总积分：<span id="total-score" class="cyber-text primary">0</span></p>
                     </div>
                 </div>
 
                 <div class="correct-answer" id="correct-answer-section" style="display: none;">
-                    <p>正确答案：<span id="correct-answer"></span></p>
+                    <p class="cyber-text">正确答案：<span id="correct-answer" class="cyber-text accent"></span></p>
                 </div>
 
                 <div class="result-actions">
-                    <button id="continue-btn" class="btn btn-secondary">等待下一题</button>
+                    <button id="continue-btn" class="cyber-btn secondary">
+                        <span>◆ 等待下一数据包</span>
+                    </button>
                 </div>
+                <div class="data-stream"></div>
             </div>
         </div>
 
         <!-- 竞赛结束界面 -->
         <div id="end-screen" class="screen">
-            <div class="end-card">
-                <h2>🎉 竞赛结束</h2>
+            <div class="end-card cyber-card hologram">
+                <h2 class="cyber-title large">◢ 连接终止 ◣</h2>
                 <div class="final-score">
-                    <p>您的最终得分</p>
-                    <div class="score-display" id="final-score">0</div>
-                    <p>分</p>
+                    <p class="cyber-text">最终积分</p>
+                    <div class="score-display cyber-text primary" id="final-score">0</div>
+                    <p class="cyber-text">POINTS</p>
                 </div>
-                
+
                 <div class="end-actions">
-                    <button id="view-leaderboard-btn" class="btn btn-primary">查看排行榜</button>
-                    <button id="restart-btn" class="btn btn-secondary">重新开始</button>
+                    <button id="view-leaderboard-btn" class="cyber-btn primary">
+                        <span>◆ 查看排行榜</span>
+                    </button>
+                    <button id="restart-btn" class="cyber-btn secondary">
+                        <span>◆ 重新连接</span>
+                    </button>
                 </div>
+                <div class="data-stream"></div>
             </div>
         </div>
     </div>
 
     <!-- 连接状态指示器 -->
-    <div id="connection-status" class="connection-status">
-        <span id="status-text">连接中...</span>
+    <div id="connection-status" class="cyber-connection-status">
+        <span id="status-text" class="cyber-text">◆ 建立连接中...</span>
     </div>
 
     <script src="/socket.io/socket.io.js"></script>

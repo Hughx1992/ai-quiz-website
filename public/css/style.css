@@ -1,49 +1,21 @@
-/* 全局样式 */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Arial', 'Microsoft YaHei', sans-serif;
-    line-height: 1.6;
-    color: #333;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    min-height: 100vh;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
+/* 赛博朋克主页样式 */
 
 /* 头部样式 */
 header {
     text-align: center;
     margin-bottom: 40px;
-    color: white;
 }
 
-header h1 {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+header h1::after {
+    content: '█';
+    animation: blink 1s infinite;
+    color: var(--cyber-accent);
 }
 
 header p {
     font-size: 1.2rem;
-    opacity: 0.9;
-}
-
-/* 主要内容区域 */
-main {
-    background: white;
-    border-radius: 15px;
-    padding: 30px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    margin-bottom: 20px;
+    margin-top: 15px;
+    font-weight: 500;
 }
 
 /* 二维码区域 */
@@ -52,90 +24,118 @@ main {
     margin-bottom: 40px;
 }
 
-.qr-section h2 {
-    color: #333;
-    margin-bottom: 20px;
-    font-size: 1.8rem;
-}
-
 .qr-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 30px;
+    gap: 40px;
     flex-wrap: wrap;
 }
 
-#qr-code {
-    width: 200px;
-    height: 200px;
-    border: 2px solid #ddd;
-    border-radius: 10px;
+.cyber-qr {
+    width: 220px;
+    height: 220px;
+    border: 2px solid var(--cyber-primary);
+    border-radius: var(--cyber-border-radius);
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #f9f9f9;
+    background: var(--cyber-darker);
+    box-shadow: var(--cyber-glow) var(--cyber-primary);
+    position: relative;
+    overflow: hidden;
 }
 
-#qr-code img {
-    max-width: 100%;
-    max-height: 100%;
+.cyber-qr::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 1px solid var(--cyber-accent);
+    border-radius: var(--cyber-border-radius);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.cyber-qr img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 8px;
 }
 
 .loading {
-    color: #666;
     font-style: italic;
+    font-family: 'Orbitron', monospace;
 }
 
 .qr-info {
     text-align: left;
-    max-width: 300px;
+    max-width: 350px;
 }
 
 .qr-info p {
-    margin-bottom: 10px;
-    color: #666;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    font-weight: 500;
 }
 
 #quiz-url {
-    color: #667eea;
     font-weight: bold;
     word-break: break-all;
+    font-family: 'Orbitron', monospace;
 }
 
 /* 统计区域 */
 .stats-section {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
     margin-bottom: 40px;
 }
 
 .stat-card {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    color: white;
-    padding: 20px;
-    border-radius: 10px;
     text-align: center;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-left: 4px solid var(--cyber-accent);
+    position: relative;
+    overflow: hidden;
 }
 
-.stat-card h3 {
-    font-size: 1rem;
-    margin-bottom: 10px;
-    opacity: 0.9;
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.stat-card:hover::before {
+    left: 100%;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--cyber-glow-strong) var(--cyber-primary);
 }
 
 .stat-number {
-    font-size: 2.5rem;
-    font-weight: bold;
+    font-size: 2.2rem;
+    font-weight: 700;
+    font-family: 'Orbitron', monospace;
+    margin-top: 10px;
 }
 
 .stat-status {
-    font-size: 1.2rem;
-    font-weight: bold;
-    padding: 5px 10px;
-    background: rgba(255,255,255,0.2);
+    font-size: 1.3rem;
+    font-weight: 600;
+    font-family: 'Orbitron', monospace;
+    margin-top: 10px;
+    padding: 8px 15px;
+    background: rgba(0, 255, 255, 0.1);
+    border: 1px solid var(--cyber-primary);
     border-radius: 20px;
     display: inline-block;
 }
@@ -145,44 +145,73 @@ main {
     margin-bottom: 30px;
 }
 
-.leaderboard-section h2 {
-    color: #333;
-    margin-bottom: 20px;
-    text-align: center;
+.leaderboard {
+    background: var(--cyber-darker);
+    border: 1px solid var(--cyber-secondary);
+    border-radius: var(--cyber-border-radius);
+    padding: 25px;
+    min-height: 250px;
+    position: relative;
+    overflow: hidden;
 }
 
-.leaderboard {
-    background: #f8f9fa;
-    border-radius: 10px;
-    padding: 20px;
-    min-height: 200px;
+.leaderboard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--cyber-secondary), var(--cyber-primary), var(--cyber-accent));
+    animation: glow 3s ease-in-out infinite alternate;
 }
 
 .leaderboard-item {
     display: flex;
     align-items: center;
     padding: 15px;
-    margin-bottom: 10px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    transition: transform 0.2s;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, var(--cyber-darker) 0%, var(--cyber-light) 100%);
+    border: 1px solid var(--cyber-primary);
+    border-radius: 10px;
+    border-left: 4px solid var(--cyber-accent);
+    position: relative;
+    overflow: hidden;
+    transition: var(--cyber-transition);
+}
+
+.leaderboard-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.leaderboard-item:hover::before {
+    left: 100%;
 }
 
 .leaderboard-item:hover {
-    transform: translateY(-2px);
+    transform: translateX(5px);
+    box-shadow: var(--cyber-glow) var(--cyber-primary);
 }
 
 .rank {
-    font-size: 1.5rem;
-    font-weight: bold;
-    width: 40px;
+    font-size: 1.6rem;
+    font-weight: 700;
+    font-family: 'Orbitron', monospace;
+    width: 50px;
     text-align: center;
-    margin-right: 15px;
+    margin-right: 20px;
+    text-shadow: var(--cyber-glow) currentColor;
 }
 
-.rank.first { color: #ffd700; }
-.rank.second { color: #c0c0c0; }
+.rank.first { color: var(--cyber-warning); }
+.rank.second { color: var(--cyber-text); }
 .rank.third { color: #cd7f32; }
 
 .user-info {
@@ -190,68 +219,62 @@ main {
 }
 
 .nickname {
-    font-weight: bold;
-    font-size: 1.1rem;
+    font-weight: 600;
+    font-size: 1.2rem;
     margin-bottom: 5px;
+    color: var(--cyber-text);
 }
 
 .stats {
-    color: #666;
-    font-size: 0.9rem;
+    color: var(--cyber-text-dim);
+    font-size: 0.95rem;
+    font-family: 'Rajdhani', monospace;
 }
 
 .score {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #667eea;
+    font-size: 1.7rem;
+    font-weight: 700;
+    font-family: 'Orbitron', monospace;
+    color: var(--cyber-primary);
+    text-shadow: var(--cyber-glow) var(--cyber-primary);
 }
 
 .no-data {
     text-align: center;
-    color: #666;
     font-style: italic;
-    padding: 40px;
+    padding: 50px;
+    font-family: 'Orbitron', monospace;
 }
 
 /* 操作按钮区域 */
 .actions-section {
     text-align: center;
-    margin-top: 30px;
-}
-
-.btn {
-    padding: 12px 24px;
-    border: none;
-    border-radius: 25px;
-    font-size: 1rem;
-    cursor: pointer;
-    margin: 0 10px;
-    transition: all 0.3s;
-    text-decoration: none;
-    display: inline-block;
-}
-
-.btn-primary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-}
-
-.btn-secondary {
-    background: #6c757d;
-    color: white;
-}
-
-.btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
 }
 
 /* 底部样式 */
-footer {
+.cyber-footer {
     text-align: center;
-    color: white;
-    opacity: 0.8;
-    padding: 20px;
+    padding: 30px 20px;
+    margin-top: 50px;
+    border-top: 1px solid var(--cyber-primary);
+    position: relative;
+}
+
+.cyber-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--cyber-primary), var(--cyber-accent), var(--cyber-primary));
+    animation: glow 2s ease-in-out infinite alternate;
 }
 
 /* 响应式设计 */

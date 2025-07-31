@@ -3,85 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI答题竞赛 - 实时排行榜</title>
+    <title>HC SNO Gathering * Cyber Leaderboard - 赛博朋克排行榜</title>
+    <link rel="stylesheet" href="css/cyber-theme.css">
     <link rel="stylesheet" href="css/leaderboard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <body>
+    <!-- 赛博朋克网格背景 -->
+    <div class="cyber-grid"></div>
+
     <div class="leaderboard-container">
-        <header class="leaderboard-header">
-            <h1>🏆 AI答题竞赛实时排行榜</h1>
+        <header class="leaderboard-header cyber-card hologram">
+            <h1 class="cyber-title large" data-text="◢ HC SNO Gathering * Cyber Leaderboard ◣">◢ HC SNO Gathering * Cyber Leaderboard ◣</h1>
             <div class="header-info">
                 <div class="info-item">
-                    <span class="label">在线用户:</span>
-                    <span class="value" id="user-count">0</span>
+                    <span class="label cyber-text dim">◆ 在线节点:</span>
+                    <span class="value cyber-text primary" id="user-count">0</span>
                 </div>
                 <div class="info-item">
-                    <span class="label">竞赛状态:</span>
-                    <span class="value" id="quiz-status">未开始</span>
+                    <span class="label cyber-text dim">◆ 系统状态:</span>
+                    <span class="value cyber-text accent" id="quiz-status">STANDBY</span>
                 </div>
                 <div class="info-item">
-                    <span class="label">更新时间:</span>
-                    <span class="value" id="update-time">--:--:--</span>
+                    <span class="label cyber-text dim">◆ 更新时间:</span>
+                    <span class="value cyber-text" id="update-time">--:--:--</span>
                 </div>
             </div>
+            <div class="data-stream"></div>
         </header>
 
         <main class="leaderboard-main">
-            <div class="podium-section">
+            <div class="podium-section cyber-card hologram">
                 <div class="podium">
                     <!-- 第二名 -->
                     <div class="podium-place second" id="second-place">
-                        <div class="podium-rank">🥈</div>
+                        <div class="podium-rank">◆</div>
                         <div class="podium-info">
-                            <div class="podium-name">--</div>
-                            <div class="podium-score">0分</div>
+                            <div class="podium-name cyber-text">--</div>
+                            <div class="podium-score cyber-text primary">0 PTS</div>
                         </div>
-                        <div class="podium-base second-base">2</div>
+                        <div class="podium-base second-base">02</div>
                     </div>
-                    
+
                     <!-- 第一名 -->
                     <div class="podium-place first" id="first-place">
-                        <div class="podium-rank">🥇</div>
+                        <div class="podium-rank">◢</div>
                         <div class="podium-info">
-                            <div class="podium-name">--</div>
-                            <div class="podium-score">0分</div>
+                            <div class="podium-name cyber-text">--</div>
+                            <div class="podium-score cyber-text accent">0 PTS</div>
                         </div>
-                        <div class="podium-base first-base">1</div>
+                        <div class="podium-base first-base">01</div>
                     </div>
-                    
+
                     <!-- 第三名 -->
                     <div class="podium-place third" id="third-place">
-                        <div class="podium-rank">🥉</div>
+                        <div class="podium-rank">◣</div>
                         <div class="podium-info">
-                            <div class="podium-name">--</div>
-                            <div class="podium-score">0分</div>
+                            <div class="podium-name cyber-text">--</div>
+                            <div class="podium-score cyber-text primary">0 PTS</div>
                         </div>
-                        <div class="podium-base third-base">3</div>
+                        <div class="podium-base third-base">03</div>
                     </div>
                 </div>
+                <div class="data-stream"></div>
             </div>
 
-            <div class="ranking-section">
-                <h2>完整排名</h2>
+            <div class="ranking-section cyber-card hologram">
+                <h2 class="cyber-title medium">◢ 完整排名 ◣</h2>
                 <div class="ranking-list" id="ranking-list">
-                    <div class="no-data">暂无排名数据</div>
+                    <div class="no-data cyber-text dim">◆ 等待数据传输...</div>
                 </div>
+                <div class="data-stream"></div>
             </div>
         </main>
 
         <footer class="leaderboard-footer">
             <div class="footer-content">
-                <p>🤖 AI答题竞赛系统 | 实时更新中...</p>
-                <div class="connection-status" id="connection-status">
+                <p class="cyber-text dim">◆ HC SNO Gathering * Cyber AI Quiz System | 实时数据流传输中... ◆</p>
+                <div class="cyber-connection-status" id="connection-status">
                     <span class="status-dot"></span>
-                    <span>连接状态: <span id="connection-text">连接中</span></span>
+                    <span class="cyber-text">连接状态: <span id="connection-text">建立连接中</span></span>
                 </div>
             </div>
         </footer>
     </div>
 
-    <!-- 动画效果 -->
-    <div class="particles" id="particles"></div>
+    <!-- 赛博朋克粒子效果 -->
+    <div class="cyber-particles" id="particles"></div>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="js/leaderboard.js"></script>

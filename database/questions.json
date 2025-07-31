@@ -318,5 +318,180 @@
     "image": null,
     "explanation": "'数据如流水'最有AI的诗意！它既保持了传统诗歌的韵味，又体现了AI的本质特征。数据对AI来说就像水对人类一样重要和自然。",
     "createdAt": "2025-07-26T09:23:08.873Z"
+  },
+  {
+    "id": "541353b3-78ec-41cd-9e06-3603177b6646",
+    "title": "test",
+    "options": [
+      "111",
+      "222",
+      "333",
+      "444"
+    ],
+    "correctAnswer": 0,
+    "category": "AI绘画识别",
+    "difficulty": "简单",
+    "image": null,
+    "createdAt": "2025-07-31T13:31:41.557Z"
+  },
+  {
+    "id": "25bbd73c-5015-4317-b150-b4fe571a9904",
+    "title": "以下哪个不是AI伦理的主要关注点？",
+    "options": [
+      "运行速度",
+      "隐私保护",
+      "算法透明度",
+      "公平性"
+    ],
+    "correctAnswer": 0,
+    "category": "AI伦理",
+    "difficulty": "中等",
+    "image": null,
+    "createdAt": "2025-07-31T13:51:07.643Z",
+    "generated": true
+  },
+  {
+    "id": "87f832cb-fd80-4aca-8ab1-d423ab645808",
+    "title": "什么是机器学习？",
+    "options": [
+      "一种硬件设备",
+      "一种编程语言",
+      "一种让计算机从数据中学习的方法",
+      "一种数据库技术"
+    ],
+    "correctAnswer": 2,
+    "category": "AI概念",
+    "difficulty": "中等",
+    "image": null,
+    "createdAt": "2025-07-31T13:51:07.643Z",
+    "generated": true
+  },
+  {
+    "id": "fc9a0ab0-ef71-40fd-940d-093a245c224c",
+    "title": "以下哪个不是AI发展的重要里程碑？",
+    "options": [
+      "GPT模型的发布",
+      "深蓝击败国际象棋世界冠军",
+      "第一台个人计算机的发明",
+      "AlphaGo击败围棋世界冠军"
+    ],
+    "correctAnswer": 2,
+    "category": "AI历史",
+    "difficulty": "中等",
+    "image": null,
+    "createdAt": "2025-07-31T13:51:07.643Z",
+    "generated": true
+  },
+  {
+    "id": "91e1ab7a-9757-49c8-bbbc-5851a4c0bba6",
+    "title": "监督学习和无监督学习的主要区别是什么？",
+    "options": [
+      "监督学习更准确，无监督学习更快速",
+      "监督学习使用标记数据，无监督学习使用未标记数据",
+      "监督学习需要更多计算资源",
+      "监督学习用于分类，无监督学习用于回归"
+    ],
+    "correctAnswer": 1,
+    "category": "AI技术",
+    "difficulty": "中等",
+    "image": null,
+    "createdAt": "2025-07-31T13:51:07.643Z",
+    "generated": true
+  },
+  {
+    "id": "8de716ea-4097-4863-8785-52b95726bbe1",
+    "title": "AI系统中的算法偏见主要来源于什么？",
+    "options": [
+      "训练数据中的偏见和不平衡",
+      "计算机硬件的限制",
+      "算法本身的复杂性",
+      "程序员的编程错误"
+    ],
+    "correctAnswer": 0,
+    "category": "AI伦理",
+    "difficulty": "中等",
+    "image": null,
+    "createdAt": "2025-07-31T13:51:07.643Z",
+    "generated": true
+  },
+  {
+    "id": "59cf26c9-254a-4a14-a913-df3c4a9acd48",
+    "title": "以下哪个不是AI伦理的主要关注点？",
+    "options": [
+      "运行速度",
+      "公平性",
+      "隐私保护",
+      "算法透明度"
+    ],
+    "correctAnswer": 0,
+    "category": "AI伦理",
+    "difficulty": "中等",
+    "image": null,
+    "createdAt": "2025-07-31T13:51:07.643Z",
+    "generated": true
+  },
+  {
+    "id": "501fb87b-0043-4543-bb7f-5ec40d740201",
+    "title": "以下哪个不是AI发展的重要里程碑？",
+    "options": [
+      "第一台个人计算机的发明",
+      "AlphaGo击败围棋世界冠军",
+      "深蓝击败国际象棋世界冠军",
+      "GPT模型的发布"
+    ],
+    "correctAnswer": 0,
+    "category": "AI历史",
+    "difficulty": "中等",
+    "image": null,
+    "createdAt": "2025-07-31T13:51:07.643Z",
+    "generated": true
+  },
+  {
+    "id": "c1c7c3f0-4f81-4e5b-b4ad-93d3b5d307a8",
+    "title": "AI系统中的算法偏见主要来源于什么？",
+    "options": [
+      "训练数据中的偏见和不平衡",
+      "算法本身的复杂性",
+      "计算机硬件的限制",
+      "程序员的编程错误"
+    ],
+    "correctAnswer": 0,
+    "category": "AI伦理",
+    "difficulty": "中等",
+    "image": null,
+    "createdAt": "2025-07-31T13:51:07.643Z",
+    "generated": true
+  },
+  {
+    "id": "08c1c578-7825-4e7d-8239-2227722f1193",
+    "title": "监督学习和无监督学习的主要区别是什么？",
+    "options": [
+      "监督学习需要更多计算资源",
+      "监督学习用于分类，无监督学习用于回归",
+      "监督学习更准确，无监督学习更快速",
+      "监督学习使用标记数据，无监督学习使用未标记数据"
+    ],
+    "correctAnswer": 3,
+    "category": "AI技术",
+    "difficulty": "中等",
+    "image": null,
+    "createdAt": "2025-07-31T13:51:07.643Z",
+    "generated": true
+  },
+  {
+    "id": "b1a5bc6c-f1d3-40a6-bb40-ba00e6f10a6d",
+    "title": "强化学习的主要应用领域不包括？",
+    "options": [
+      "图像压缩",
+      "推荐系统",
+      "机器人控制",
+      "游戏AI"
+    ],
+    "correctAnswer": 0,
+    "category": "AI概念",
+    "difficulty": "中等",
+    "image": null,
+    "createdAt": "2025-07-31T13:51:07.643Z",
+    "generated": true
   }
 ]

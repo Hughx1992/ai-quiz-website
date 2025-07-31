@@ -3,62 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI答题竞赛 - 管理员面板</title>
+    <title>HC SNO Gathering * Cyber Admin Panel - AI竞赛管理系统</title>
     <link rel="stylesheet" href="css/admin.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <body>
+    <!-- 赛博朋克网格背景 -->
+    <div class="cyber-grid"></div>
+
     <div class="admin-container">
-        <header class="admin-header">
-            <h1>🎮 管理员控制面板</h1>
+        <header class="admin-header hologram">
+            <h1 data-text="◢ HC SNO Gathering * Cyber Admin Panel ◣">◢ HC SNO Gathering * Cyber Admin Panel ◣</h1>
             <div class="header-actions">
-                <button class="btn btn-secondary" onclick="window.open('/', '_blank')">主页</button>
-                <button class="btn btn-secondary" onclick="window.open('/leaderboard', '_blank')">大屏排行榜</button>
+                <button class="btn btn-secondary" onclick="window.open('/', '_blank')">
+                    <span>◆ 主页</span>
+                </button>
+                <button class="btn btn-secondary" onclick="window.open('/leaderboard', '_blank')">
+                    <span>◆ 大屏排行榜</span>
+                </button>
             </div>
+            <div class="data-stream"></div>
         </header>
 
         <main class="admin-main">
             <!-- 竞赛控制区域 -->
-            <section class="control-section">
-                <h2>🎯 竞赛控制</h2>
+            <section class="control-section hologram">
+                <h2>◢ 竞赛控制系统 ◣</h2>
                 <div class="control-panel">
                     <div class="status-display">
                         <div class="status-item">
-                            <span class="label">竞赛状态:</span>
-                            <span class="status" id="quiz-status">未开始</span>
+                            <span class="label">◆ 系统状态</span>
+                            <span class="status" id="quiz-status">STANDBY</span>
                         </div>
                         <div class="status-item">
-                            <span class="label">在线用户:</span>
+                            <span class="label">◆ 在线节点</span>
                             <span class="count" id="user-count">0</span>
                         </div>
                         <div class="status-item">
-                            <span class="label">题目总数:</span>
+                            <span class="label">◆ 数据库</span>
                             <span class="count" id="question-count">0</span>
                         </div>
                     </div>
-                    
+
                     <div class="control-buttons">
-                        <button id="start-quiz-btn" class="btn btn-success">开始竞赛</button>
-                        <button id="next-question-btn" class="btn btn-primary" disabled>下一题</button>
-                        <button id="stop-quiz-btn" class="btn btn-danger" disabled>结束竞赛</button>
-                        <button id="refresh-status-btn" class="btn btn-info">刷新状态</button>
+                        <button id="start-quiz-btn" class="btn btn-success">
+                            <span>▶ 启动系统</span>
+                        </button>
+                        <button id="next-question-btn" class="btn btn-primary" disabled>
+                            <span>⏭ 下一数据包</span>
+                        </button>
+                        <button id="stop-quiz-btn" class="btn btn-danger" disabled>
+                            <span>⏹ 终止连接</span>
+                        </button>
+                        <button id="refresh-status-btn" class="btn btn-info">
+                            <span>🔄 刷新状态</span>
+                        </button>
                     </div>
                 </div>
+                <div class="data-stream"></div>
             </section>
 
             <!-- 当前题目显示 -->
-            <section class="current-question-section">
-                <h2>📝 当前题目</h2>
+            <section class="current-question-section hologram">
+                <h2>◢ 数据包内容 ◣</h2>
                 <div class="question-display" id="current-question-display">
-                    <div class="no-question">暂无进行中的题目</div>
+                    <div class="no-question">◆ 等待数据传输...</div>
                 </div>
 
                 <!-- 答案解释区域（仅管理员可见） -->
                 <div class="admin-explanation" id="admin-explanation" style="display: none;">
-                    <h3>💡 答案解释</h3>
+                    <h3>◢ 系统分析结果 ◣</h3>
                     <div class="explanation-content" id="explanation-content">
                         <p id="explanation-text"></p>
                     </div>
                 </div>
+                <div class="data-stream"></div>
             </section>
 
             <!-- 题目管理区域 -->

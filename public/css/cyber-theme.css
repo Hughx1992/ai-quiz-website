@@ -1,0 +1,376 @@
+/* 赛博朋克通用主题样式 */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+/* 全局CSS变量 */
+:root {
+    /* 赛博朋克色彩变量 */
+    --cyber-primary: #00ffff;
+    --cyber-secondary: #ff00ff;
+    --cyber-accent: #00ff41;
+    --cyber-warning: #ffff00;
+    --cyber-danger: #ff073a;
+    --cyber-dark: #0a0a0a;
+    --cyber-darker: #050505;
+    --cyber-light: #1a1a2e;
+    --cyber-lighter: #16213e;
+    --cyber-text: #e0e0e0;
+    --cyber-text-dim: #a0a0a0;
+    --cyber-glow: 0 0 20px;
+    --cyber-glow-strong: 0 0 30px;
+    --cyber-border-radius: 12px;
+    --cyber-transition: all 0.3s ease;
+}
+
+/* 全局重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 基础样式 */
+body {
+    font-family: 'Rajdhani', 'Arial', 'Microsoft YaHei', sans-serif;
+    background: var(--cyber-dark);
+    color: var(--cyber-text);
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+    min-height: 100vh;
+}
+
+/* 赛博朋克背景效果 */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(0, 255, 65, 0.05) 0%, transparent 50%);
+    z-index: -2;
+    animation: backgroundPulse 8s ease-in-out infinite alternate;
+}
+
+/* 扫描线效果 */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--cyber-primary), transparent);
+    z-index: -1;
+    animation: scanLine 3s linear infinite;
+}
+
+/* 网格背景 */
+.cyber-grid {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    pointer-events: none;
+    z-index: -1;
+    animation: gridMove 20s linear infinite;
+}
+
+/* 关键帧动画 */
+@keyframes backgroundPulse {
+    0% { opacity: 0.3; }
+    100% { opacity: 0.7; }
+}
+
+@keyframes scanLine {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(100vh); opacity: 0; }
+}
+
+@keyframes gridMove {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(50px, 50px); }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+@keyframes glow {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+/* 通用容器 */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+/* 赛博朋克卡片 */
+.cyber-card {
+    background: linear-gradient(135deg, var(--cyber-darker) 0%, var(--cyber-light) 100%);
+    border: 1px solid var(--cyber-primary);
+    border-radius: var(--cyber-border-radius);
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: var(--cyber-glow) var(--cyber-primary);
+    position: relative;
+    overflow: hidden;
+    transition: var(--cyber-transition);
+}
+
+.cyber-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--cyber-primary), var(--cyber-secondary), var(--cyber-accent));
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+.cyber-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--cyber-glow-strong) var(--cyber-primary);
+}
+
+/* 赛博朋克标题 */
+.cyber-title {
+    font-family: 'Orbitron', monospace;
+    color: var(--cyber-primary);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: var(--cyber-glow) var(--cyber-primary);
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.cyber-title::before {
+    content: '▶';
+    margin-right: 10px;
+    color: var(--cyber-accent);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.cyber-title.large {
+    font-size: 2.5rem;
+    font-weight: 900;
+}
+
+.cyber-title.medium {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.cyber-title.small {
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+/* 赛博朋克按钮 */
+.cyber-btn {
+    padding: 12px 25px;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'Rajdhani', monospace;
+    cursor: pointer;
+    transition: var(--cyber-transition);
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+    background: transparent;
+}
+
+.cyber-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.cyber-btn:hover::before {
+    left: 100%;
+}
+
+.cyber-btn:hover:not(:disabled) {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: var(--cyber-glow-strong) currentColor;
+}
+
+.cyber-btn:active:not(:disabled) {
+    transform: translateY(-1px) scale(0.98);
+}
+
+.cyber-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* 按钮变体 */
+.cyber-btn.primary {
+    background: linear-gradient(135deg, var(--cyber-primary), var(--cyber-secondary));
+    color: var(--cyber-dark);
+    border-color: var(--cyber-primary);
+    box-shadow: var(--cyber-glow) var(--cyber-primary);
+}
+
+.cyber-btn.success {
+    background: linear-gradient(135deg, var(--cyber-accent), #00cc33);
+    color: var(--cyber-dark);
+    border-color: var(--cyber-accent);
+    box-shadow: var(--cyber-glow) var(--cyber-accent);
+}
+
+.cyber-btn.danger {
+    background: linear-gradient(135deg, var(--cyber-danger), #cc0029);
+    color: var(--cyber-text);
+    border-color: var(--cyber-danger);
+    box-shadow: var(--cyber-glow) var(--cyber-danger);
+}
+
+.cyber-btn.warning {
+    background: linear-gradient(135deg, var(--cyber-warning), #ffcc00);
+    color: var(--cyber-dark);
+    border-color: var(--cyber-warning);
+    box-shadow: var(--cyber-glow) var(--cyber-warning);
+}
+
+.cyber-btn.secondary {
+    background: linear-gradient(135deg, var(--cyber-text-dim), var(--cyber-lighter));
+    color: var(--cyber-text);
+    border-color: var(--cyber-text-dim);
+    box-shadow: var(--cyber-glow) var(--cyber-text-dim);
+}
+
+/* 赛博朋克输入框 */
+.cyber-input {
+    width: 100%;
+    padding: 12px 15px;
+    background: var(--cyber-darker);
+    border: 1px solid var(--cyber-primary);
+    border-radius: 8px;
+    font-size: 1rem;
+    color: var(--cyber-text);
+    font-family: 'Rajdhani', monospace;
+    transition: var(--cyber-transition);
+}
+
+.cyber-input:focus {
+    outline: none;
+    border-color: var(--cyber-accent);
+    box-shadow: var(--cyber-glow) var(--cyber-accent);
+    background: var(--cyber-light);
+}
+
+.cyber-input::placeholder {
+    color: var(--cyber-text-dim);
+}
+
+/* 赛博朋克文本 */
+.cyber-text {
+    color: var(--cyber-text);
+}
+
+.cyber-text.dim {
+    color: var(--cyber-text-dim);
+}
+
+.cyber-text.primary {
+    color: var(--cyber-primary);
+    text-shadow: var(--cyber-glow) var(--cyber-primary);
+}
+
+.cyber-text.accent {
+    color: var(--cyber-accent);
+    text-shadow: var(--cyber-glow) var(--cyber-accent);
+}
+
+.cyber-text.danger {
+    color: var(--cyber-danger);
+    text-shadow: var(--cyber-glow) var(--cyber-danger);
+}
+
+/* 数据流效果 */
+.data-stream {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, var(--cyber-primary), transparent);
+    animation: dataFlow 2s ease-in-out infinite;
+}
+
+@keyframes dataFlow {
+    0% { transform: translateY(-100%); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translateY(100%); opacity: 0; }
+}
+
+/* 全息效果 */
+.hologram {
+    position: relative;
+    overflow: hidden;
+}
+
+.hologram::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 255, 255, 0.03) 2px,
+        rgba(0, 255, 255, 0.03) 4px
+    );
+    pointer-events: none;
+    animation: hologramFlicker 0.15s linear infinite;
+}
+
+@keyframes hologramFlicker {
+    0% { opacity: 1; }
+    98% { opacity: 1; }
+    99% { opacity: 0.98; }
+    100% { opacity: 1; }
+}
+
+@keyframes dataFlow {
+    0% { transform: translateY(-100%); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translateY(100%); opacity: 0; }
+}
