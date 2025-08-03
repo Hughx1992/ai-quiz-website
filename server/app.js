@@ -481,15 +481,35 @@ app.post('/api/generate-questions', async (req, res) => {
             );
         }
 
-        // 保存生成的题目到数据库
+        // 检查重复题目
         const existingQuestions = await readJsonFile(QUESTIONS_FILE);
-        const allQuestions = [...existingQuestions, ...generatedQuestions];
+        const uniqueQuestions = [];
+        let duplicateCount = 0;
+
+        for (const newQuestion of generatedQuestions) {
+            // 检查是否已存在相同标题的题目
+            const isDuplicate = existingQuestions.some(existingQ => 
+                existingQ.title.trim().toLowerCase() === newQuestion.title.trim().toLowerCase()
+            );
+            
+            if (!isDuplicate) {
+                uniqueQuestions.push(newQuestion);
+            } else {
+                duplicateCount++;
+                console.log(`重复题目已跳过: ${newQuestion.title}`);
+            }
+        }
+
+        // 保存不重复的题目到数据库
+        const allQuestions = [...existingQuestions, ...uniqueQuestions];
         await writeJsonFile(QUESTIONS_FILE, allQuestions);
 
         res.json({
             success: true,
             generated: generatedQuestions.length,
-            questions: generatedQuestions
+            unique: uniqueQuestions.length,
+            duplicates: duplicateCount,
+            questions: uniqueQuestions
         });
     } catch (error) {
         console.error('Error generating questions:', error);

@@ -7,7 +7,12 @@
     "dev": "nodemon server/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["quiz", "ai", "realtime", "websocket"],
+  "keywords": [
+    "quiz",
+    "ai",
+    "realtime",
+    "websocket"
+  ],
   "author": "",
   "license": "ISC",
   "description": "AI答题竞赛网站 - 支持多人实时答题和排名",
@@ -21,6 +26,7 @@
     "multer": "^2.0.2",
     "qrcode": "^1.5.4",
     "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
     "uuid": "^11.1.0"
   }
 }

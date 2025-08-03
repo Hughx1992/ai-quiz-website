@@ -231,7 +231,7 @@ function displayCurrentQuestion(question) {
             <h4>${question.title}</h4>
             ${question.image ? `<img src="${question.image}" alt="题目图片" style="max-width: 200px; margin: 10px 0;">` : ''}
             <div class="question-meta">
-                <span class="answer-info">正确答案：${correctAnswerLetter}</span>
+                <span class="answer-info">正确答案：${correctAnswerLetter} (索引: ${question.correctAnswer})</span>
                 <span class="category-info">分类：${question.category || '未分类'}</span>
                 <span class="difficulty-info">难度：${question.difficulty || '中等'}</span>
             </div>
