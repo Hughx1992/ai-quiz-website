@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>成就系统 - 赛博朋克答题竞赛</title>
+    <link rel="stylesheet" href="css/cyber-theme.css">
+    <link rel="stylesheet" href="css/achievements.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+    <!-- 赛博朋克网格背景 -->
+    <div class="cyber-grid"></div>
+    
+    <!-- 成就通知容器 -->
+    <div id="achievement-notification-container"></div>
+
+    <div class="container">
+        <header class="cyber-card hologram">
+            <h1 class="cyber-title large" data-text="◢ 成就系统 ◣">◢ 成就系统 ◣</h1>
+            <p class="cyber-text">◆ 解锁成就，展现你的赛博答题实力 ◆</p>
+            <div class="data-stream"></div>
+        </header>
+
+        <!-- 用户统计概览 -->
+        <section class="achievement-stats">
+            <div class="achievement-stat-card cyber-card">
+                <div class="achievement-stat-number" id="total-achievements">0</div>
+                <div class="achievement-stat-label">总成就数</div>
+            </div>
+            <div class="achievement-stat-card cyber-card">
+                <div class="achievement-stat-number" id="unlocked-achievements">0</div>
+                <div class="achievement-stat-label">已解锁</div>
+            </div>
+            <div class="achievement-stat-card cyber-card">
+                <div class="achievement-stat-number" id="unlock-rate">0%</div>
+                <div class="achievement-stat-label">解锁率</div>
+            </div>
+            <div class="achievement-stat-card cyber-card">
+                <div class="achievement-stat-number" id="total-points">0</div>
+                <div class="achievement-stat-label">成就积分</div>
+            </div>
+        </section>
+
+        <!-- 成就分类标签 -->
+        <section class="achievement-categories">
+            <button class="achievement-category active" data-category="all">全部</button>
+            <button class="achievement-category" data-category="answer">答题成就</button>
+            <button class="achievement-category" data-category="streak">连续成就</button>
+            <button class="achievement-category" data-category="speed">速度成就</button>
+            <button class="achievement-category" data-category="accuracy">准确率成就</button>
+            <button class="achievement-category" data-category="time">时间成就</button>
+        </section>
+
+        <!-- 成就网格展示 -->
+        <section class="achievement-grid" id="achievement-grid">
+            <!-- 成就卡片将通过JavaScript动态生成 -->
+        </section>
+
+        <!-- 操作按钮 -->
+        <div class="actions-section">
+            <button class="cyber-btn primary" onclick="refreshAchievements()">
+                <span>◆ 刷新成就</span>
+            </button>
+            <button class="cyber-btn secondary" onclick="window.open('/quiz', '_blank')">
+                <span>◆ 开始答题</span>
+            </button>
+            <button class="cyber-btn secondary" onclick="window.open('/', '_blank')">
+                <span>◆ 返回主页</span>
+            </button>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/achievements.js"></script>
+</body>
+</html>

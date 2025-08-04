@@ -6,12 +6,16 @@
     <title>HC SNO Gathering * Cyber AI Quiz - 赛博朋克答题竞赛</title>
     <link rel="stylesheet" href="css/cyber-theme.css">
     <link rel="stylesheet" href="css/quiz.css">
+    <link rel="stylesheet" href="css/achievements.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <body>
     <!-- 赛博朋克网格背景 -->
     <div class="cyber-grid"></div>
+    
+    <!-- 成就通知容器 -->
+    <div id="achievement-notification-container"></div>
 
     <div class="quiz-container">
         <!-- 登录界面 -->
@@ -143,6 +147,7 @@
     </div>
 
     <script src="/socket.io/socket.io.js"></script>
+    <script src="js/achievements.js"></script>
     <script src="js/quiz.js"></script>
 </body>
 </html>

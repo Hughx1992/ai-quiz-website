@@ -6,11 +6,14 @@ let selectedAnswer = null;
 let timer = null;
 let timeLeft = 30;
 let isTimedOut = false;
+let questionStartTime = null;
+let achievementSystem = null;
 
 // 页面加载完成后初始化
 document.addEventListener('DOMContentLoaded', function() {
     initializeSocket();
     setupEventListeners();
+    initializeAchievementSystem();
     showScreen('login-screen');
 });
 
@@ -141,6 +144,9 @@ function showScreen(screenId) {
 
 // 显示题目
 function displayQuestion(question) {
+    // 记录题目开始时间
+    questionStartTime = Date.now();
+    
     document.getElementById('question-title').textContent = question.title;
 
     // 显示图片（如果有）
@@ -243,12 +249,18 @@ function submitAnswer() {
     document.getElementById('submit-btn').disabled = true;
     document.getElementById('submit-btn').textContent = '已提交';
 
-    // 发送答案到服务器
-    socket.emit('submit-answer', {
+    const answerData = {
         questionId: currentQuestion.id,
         selectedAnswer: selectedAnswer,
-        answerTime: Date.now()
-    });
+        answerTime: Date.now(),
+        questionStartTime: questionStartTime
+    };
+
+    // 发送答案到服务器
+    socket.emit('submit-answer', answerData);
+
+    // 检查成就
+    checkAchievements('submit_answer', answerData);
 
     stopTimer();
 
@@ -448,3 +460,73 @@ window.addEventListener('beforeunload', function() {
         socket.disconnect();
     }
 });
+
+// 成就系统相关函数
+function initializeAchievementSystem() {
+    // 等待成就系统加载完成
+    if (typeof AchievementSystem !== 'undefined') {
+        achievementSystem = new AchievementSystem();
+    } else {
+        // 如果成就系统还未加载，稍后重试
+        setTimeout(initializeAchievementSystem, 100);
+    }
+}
+
+function checkAchievements(action, data) {
+    if (!achievementSystem || !currentUser) return;
+    
+    // 向服务器发送成就检查请求
+    fetch('/api/check-achievements', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            userId: currentUser.id,
+            action: action,
+            data: data
+        })
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.newlyUnlocked && result.newlyUnlocked.length > 0) {
+            // 显示成就解锁通知
+            result.newlyUnlocked.forEach(achievement => {
+                showAchievementNotification(achievement);
+            });
+        }
+    })
+    .catch(error => {
+        console.error('检查成就失败:', error);
+    });
+}
+
+function showAchievementNotification(achievement) {
+    if (!achievementSystem) return;
+    
+    // 使用成就系统的通知功能
+    achievementSystem.showAchievementNotification(achievement);
+    
+    // 播放成就解锁音效（如果有）
+    playAchievementSound();
+}
+
+function playAchievementSound() {
+    // 创建简单的音效
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+    oscillator.frequency.setValueAtTime(1000, audioContext.currentTime + 0.1);
+    oscillator.frequency.setValueAtTime(1200, audioContext.currentTime + 0.2);
+    
+    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+    
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.5);
+}

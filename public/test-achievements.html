@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>成就系统测试 - 赛博朋克答题竞赛</title>
+    <link rel="stylesheet" href="css/cyber-theme.css">
+    <link rel="stylesheet" href="css/achievements.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+    <!-- 赛博朋克网格背景 -->
+    <div class="cyber-grid"></div>
+    
+    <!-- 成就通知容器 -->
+    <div id="achievement-notification-container"></div>
+
+    <div class="container">
+        <header class="cyber-card hologram">
+            <h1 class="cyber-title large" data-text="◢ 成就系统测试 ◣">◢ 成就系统测试 ◣</h1>
+            <p class="cyber-text">◆ 测试成就系统的各项功能 ◆</p>
+            <div class="data-stream"></div>
+        </header>
+
+        <main>
+            <!-- 测试控制面板 -->
+            <section class="cyber-card hologram">
+                <h2 class="cyber-title medium">◢ 测试控制面板 ◣</h2>
+                <div class="test-controls">
+                    <button class="cyber-btn primary" onclick="simulateAnswer()">
+                        <span>◆ 模拟答题</span>
+                    </button>
+                    <button class="cyber-btn secondary" onclick="simulateCorrectAnswer()">
+                        <span>◆ 模拟正确答题</span>
+                    </button>
+                    <button class="cyber-btn secondary" onclick="simulateSpeedAnswer()">
+                        <span>◆ 模拟快速答题</span>
+                    </button>
+                    <button class="cyber-btn secondary" onclick="testAchievementNotification()">
+                        <span>◆ 测试成就通知</span>
+                    </button>
+                    <button class="cyber-btn secondary" onclick="clearTestData()">
+                        <span>◆ 清除测试数据</span>
+                    </button>
+                </div>
+                <div class="data-stream"></div>
+            </section>
+
+            <!-- 测试状态 -->
+            <section class="cyber-card hologram">
+                <h2 class="cyber-title medium">◢ 测试状态 ◣</h2>
+                <div class="test-status">
+                    <div class="status-item">
+                        <span class="status-label">用户ID:</span>
+                        <span class="status-value" id="test-user-id">未连接</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">答题次数:</span>
+                        <span class="status-value" id="test-answer-count">0</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">正确次数:</span>
+                        <span class="status-value" id="test-correct-count">0</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">已解锁成就:</span>
+                        <span class="status-value" id="test-unlocked-count">0</span>
+                    </div>
+                </div>
+                <div class="data-stream"></div>
+            </section>
+
+            <!-- 成就预览 -->
+            <section class="cyber-card hologram">
+                <h2 class="cyber-title medium">◢ 成就预览 ◣</h2>
+                <div class="achievement-grid" id="test-achievement-grid">
+                    <!-- 成就卡片将通过JavaScript动态生成 -->
+                </div>
+                <div class="data-stream"></div>
+            </section>
+
+            <!-- 日志输出 -->
+            <section class="cyber-card hologram">
+                <h2 class="cyber-title medium">◢ 测试日志 ◣</h2>
+                <div class="test-log" id="test-log">
+                    <div class="log-entry">◆ 成就系统测试已启动</div>
+                </div>
+                <div class="data-stream"></div>
+            </section>
+        </main>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/achievements.js"></script>
+    <script>
+        // 测试变量
+        let testUserId = null;
+        let testAnswerCount = 0;
+        let testCorrectCount = 0;
+        let testAchievementSystem = null;
+        let testSocket = null;
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeTestSystem();
+        });
+
+        // 初始化测试系统
+        async function initializeTestSystem() {
+            try {
+                // 生成测试用户ID
+                testUserId = 'test_' + Date.now();
+                document.getElementById('test-user-id').textContent = testUserId;
+                
+                // 初始化Socket连接
+                testSocket = io();
+                
+                // 等待成就系统加载
+                if (typeof AchievementSystem !== 'undefined') {
+                    testAchievementSystem = new AchievementSystem();
+                    addLog('成就系统初始化成功');
+                } else {
+                    addLog('等待成就系统加载...');
+                    setTimeout(initializeTestSystem, 100);
+                    return;
+                }
+                
+                // 加载测试数据
+                await loadTestData();
+                
+                addLog('测试系统初始化完成');
+            } catch (error) {
+                addLog('初始化失败: ' + error.message);
+            }
+        }
+
+        // 加载测试数据
+        async function loadTestData() {
+            try {
+                // 加载用户成就
+                const response = await fetch(`/api/user-achievements/${testUserId}`);
+                if (response.ok) {
+                    const userAchievements = await response.json();
+                    document.getElementById('test-unlocked-count').textContent = userAchievements.length;
+                    addLog(`加载了 ${userAchievements.length} 个用户成就`);
+                }
+                
+                // 加载答题记录
+                const answersResponse = await fetch('/api/answers');
+                if (answersResponse.ok) {
+                    const answers = await answersResponse.json();
+                    const userAnswers = answers.filter(a => a.userId === testUserId);
+                    testAnswerCount = userAnswers.length;
+                    testCorrectCount = userAnswers.filter(a => a.isCorrect).length;
+                    
+                    document.getElementById('test-answer-count').textContent = testAnswerCount;
+                    document.getElementById('test-correct-count').textContent = testCorrectCount;
+                    
+                    addLog(`加载了 ${userAnswers.length} 个答题记录`);
+                }
+                
+                // 显示成就预览
+                displayAchievementPreview();
+            } catch (error) {
+                addLog('加载测试数据失败: ' + error.message);
+            }
+        }
+
+        // 显示成就预览
+        function displayAchievementPreview() {
+            const grid = document.getElementById('test-achievement-grid');
+            if (!testAchievementSystem) return;
+            
+            const achievements = testAchievementSystem.achievements || [];
+            const userAchievements = testAchievementSystem.userAchievements || [];
+            
+            grid.innerHTML = achievements.slice(0, 6).map(achievement => {
+                const userAchievement = userAchievements.find(ua => ua.achievementId === achievement.id);
+                const isUnlocked = !!userAchievement;
+                const rarity = achievement.rarity || 'bronze';
+                
+                return `
+                    <div class="achievement-card ${rarity} ${isUnlocked ? 'unlocked' : ''}" style="transform: scale(0.8);">
+                        <div class="achievement-header">
+                            <div class="achievement-badge ${rarity} ${isUnlocked ? 'unlocked' : ''}" style="width: 40px; height: 40px; font-size: 1.2rem;">
+                                ${achievement.icon || '🏆'}
+                            </div>
+                            <div class="achievement-info">
+                                <div class="achievement-title" style="font-size: 0.9rem;">${achievement.name}</div>
+                                <div class="achievement-type" style="font-size: 0.7rem;">${testAchievementSystem.getCategoryName(achievement.category)}</div>
+                            </div>
+                        </div>
+                        <div class="achievement-description" style="font-size: 0.8rem;">${achievement.description}</div>
+                        ${isUnlocked ? '<div class="achievement-unlock-time" style="font-size: 0.7rem;">已解锁</div>' : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // 模拟答题
+        async function simulateAnswer() {
+            try {
+                const answerData = {
+                    userId: testUserId,
+                    questionId: 'test_q_' + Date.now(),
+                    selectedAnswer: Math.floor(Math.random() * 4),
+                    isCorrect: Math.random() > 0.5,
+                    points: Math.random() > 0.5 ? 10 : 0,
+                    answerTime: new Date().toISOString(),
+                    isTimeout: false
+                };
+                
+                // 发送到服务器
+                const response = await fetch('/api/check-achievements', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        userId: testUserId,
+                        action: 'submit_answer',
+                        data: answerData
+                    })
+                });
+                
+                const result = await response.json();
+                
+                // 更新计数
+                testAnswerCount++;
+                if (answerData.isCorrect) testCorrectCount++;
+                
+                document.getElementById('test-answer-count').textContent = testAnswerCount;
+                document.getElementById('test-correct-count').textContent = testCorrectCount;
+                
+                addLog(`模拟答题: ${answerData.isCorrect ? '正确' : '错误'}`);
+                
+                if (result.newlyUnlocked && result.newlyUnlocked.length > 0) {
+                    addLog(`🎉 解锁了 ${result.newlyUnlocked.length} 个成就!`);
+                    document.getElementById('test-unlocked-count').textContent = 
+                        parseInt(document.getElementById('test-unlocked-count').textContent) + result.newlyUnlocked.length;
+                    displayAchievementPreview();
+                }
+            } catch (error) {
+                addLog('模拟答题失败: ' + error.message);
+            }
+        }
+
+        // 模拟正确答题
+        async function simulateCorrectAnswer() {
+            try {
+                const answerData = {
+                    userId: testUserId,
+                    questionId: 'test_q_correct_' + Date.now(),
+                    selectedAnswer: 0,
+                    isCorrect: true,
+                    points: 10,
+                    answerTime: new Date().toISOString(),
+                    isTimeout: false
+                };
+                
+                const response = await fetch('/api/check-achievements', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        userId: testUserId,
+                        action: 'correct_answer',
+                        data: answerData
+                    })
+                });
+                
+                const result = await response.json();
+                
+                testAnswerCount++;
+                testCorrectCount++;
+                
+                document.getElementById('test-answer-count').textContent = testAnswerCount;
+                document.getElementById('test-correct-count').textContent = testCorrectCount;
+                
+                addLog('模拟正确答题');
+                
+                if (result.newlyUnlocked && result.newlyUnlocked.length > 0) {
+                    addLog(`🎉 解锁了 ${result.newlyUnlocked.length} 个成就!`);
+                    document.getElementById('test-unlocked-count').textContent = 
+                        parseInt(document.getElementById('test-unlocked-count').textContent) + result.newlyUnlocked.length;
+                    displayAchievementPreview();
+                }
+            } catch (error) {
+                addLog('模拟正确答题失败: ' + error.message);
+            }
+        }
+
+        // 模拟快速答题
+        async function simulateSpeedAnswer() {
+            try {
+                const answerData = {
+                    userId: testUserId,
+                    questionId: 'test_q_speed_' + Date.now(),
+                    selectedAnswer: 0,
+                    isCorrect: true,
+                    points: 10,
+                    answerTime: new Date().toISOString(),
+                    isTimeout: false,
+                    questionTime: new Date(Date.now() - 2000).toISOString() // 2秒前开始
+                };
+                
+                const response = await fetch('/api/check-achievements', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        userId: testUserId,
+                        action: 'speed_answer',
+                        data: answerData
+                    })
+                });
+                
+                const result = await response.json();
+                
+                testAnswerCount++;
+                testCorrectCount++;
+                
+                document.getElementById('test-answer-count').textContent = testAnswerCount;
+                document.getElementById('test-correct-count').textContent = testCorrectCount;
+                
+                addLog('模拟快速答题 (2秒内)');
+                
+                if (result.newlyUnlocked && result.newlyUnlocked.length > 0) {
+                    addLog(`🎉 解锁了 ${result.newlyUnlocked.length} 个成就!`);
+                    document.getElementById('test-unlocked-count').textContent = 
+                        parseInt(document.getElementById('test-unlocked-count').textContent) + result.newlyUnlocked.length;
+                    displayAchievementPreview();
+                }
+            } catch (error) {
+                addLog('模拟快速答题失败: ' + error.message);
+            }
+        }
+
+        // 测试成就通知
+        function testAchievementNotification() {
+            if (testAchievementSystem) {
+                const testAchievement = {
+                    id: 'test_achievement',
+                    name: '测试成就',
+                    description: '这是一个测试成就通知',
+                    category: 'test',
+                    rarity: 'gold',
+                    rewards: { points: 100, title: '测试者' },
+                    icon: '🎉'
+                };
+                
+                testAchievementSystem.showAchievementNotification(testAchievement);
+                addLog('显示测试成就通知');
+            } else {
+                addLog('成就系统未初始化');
+            }
+        }
+
+        // 清除测试数据
+        async function clearTestData() {
+            try {
+                // 重置计数
+                testAnswerCount = 0;
+                testCorrectCount = 0;
+                
+                document.getElementById('test-answer-count').textContent = '0';
+                document.getElementById('test-correct-count').textContent = '0';
+                document.getElementById('test-unlocked-count').textContent = '0';
+                
+                addLog('测试数据已清除');
+                displayAchievementPreview();
+            } catch (error) {
+                addLog('清除测试数据失败: ' + error.message);
+            }
+        }
+
+        // 添加日志
+        function addLog(message) {
+            const logContainer = document.getElementById('test-log');
+            const logEntry = document.createElement('div');
+            logEntry.className = 'log-entry';
+            logEntry.textContent = `◆ ${new Date().toLocaleTimeString()} - ${message}`;
+            
+            logContainer.appendChild(logEntry);
+            logContainer.scrollTop = logContainer.scrollHeight;
+            
+            // 限制日志数量
+            if (logContainer.children.length > 50) {
+                logContainer.removeChild(logContainer.firstChild);
+            }
+        }
+    </script>
+
+    <style>
+        .test-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .test-status {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: var(--cyber-darker);
+            border-radius: var(--cyber-border-radius);
+            border: 1px solid var(--cyber-primary);
+        }
+        
+        .status-label {
+            color: var(--cyber-text-dim);
+            font-size: 0.9rem;
+        }
+        
+        .status-value {
+            color: var(--cyber-primary);
+            font-weight: bold;
+            font-family: 'Orbitron', monospace;
+        }
+        
+        .test-log {
+            height: 200px;
+            overflow-y: auto;
+            background: var(--cyber-darker);
+            border: 1px solid var(--cyber-primary);
+            border-radius: var(--cyber-border-radius);
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+        }
+        
+        .log-entry {
+            margin-bottom: 5px;
+            color: var(--cyber-text);
+            opacity: 0.8;
+        }
+        
+        .log-entry:nth-child(even) {
+            opacity: 0.6;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 767px) {
+            .test-controls {
+                flex-direction: column;
+            }
+            
+            .test-status {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</body>
+</html>

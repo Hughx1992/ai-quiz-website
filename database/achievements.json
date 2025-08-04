@@ -1,0 +1,304 @@
+{
+  "achievements": [
+    {
+      "id": "first_answer",
+      "name": "初出茅庐",
+      "description": "完成第1题",
+      "type": "answer",
+      "level": "bronze",
+      "icon": "📝",
+      "condition": {
+        "type": "answer_count",
+        "target": 1
+      },
+      "rewards": {
+        "points": 10,
+        "title": "初学者"
+      },
+      "isActive": true,
+      "unlockRate": 95,
+      "createdAt": "2025-08-03T00:00:00.000Z"
+    },
+    {
+      "id": "answer_10",
+      "name": "小试牛刀",
+      "description": "完成10题答题",
+      "type": "answer",
+      "level": "bronze",
+      "icon": "📚",
+      "condition": {
+        "type": "answer_count",
+        "target": 10
+      },
+      "rewards": {
+        "points": 50,
+        "title": "答题新手"
+      },
+      "isActive": true,
+      "unlockRate": 78,
+      "createdAt": "2025-08-03T00:00:00.000Z"
+    },
+    {
+      "id": "answer_50",
+      "name": "答题达人",
+      "description": "完成50题答题",
+      "type": "answer",
+      "level": "silver",
+      "icon": "🎓",
+      "condition": {
+        "type": "answer_count",
+        "target": 50
+      },
+      "rewards": {
+        "points": 200,
+        "title": "知识达人"
+      },
+      "isActive": true,
+      "unlockRate": 45,
+      "createdAt": "2025-08-03T00:00:00.000Z"
+    },
+    {
+      "id": "streak_5",
+      "name": "连续表现",
+      "description": "连续答对5题",
+      "type": "streak",
+      "level": "bronze",
+      "icon": "🔥",
+      "condition": {
+        "type": "correct_streak",
+        "target": 5
+      },
+      "rewards": {
+        "points": 30,
+        "title": "连续答题者"
+      },
+      "isActive": true,
+      "unlockRate": 62,
+      "createdAt": "2025-08-03T00:00:00.000Z"
+    },
+    {
+      "id": "streak_10",
+      "name": "完美表现",
+      "description": "连续答对10题",
+      "type": "streak",
+      "level": "gold",
+      "icon": "⭐",
+      "condition": {
+        "type": "correct_streak",
+        "target": 10
+      },
+      "rewards": {
+        "points": 100,
+        "title": "完美表现"
+      },
+      "isActive": true,
+      "unlockRate": 12,
+      "createdAt": "2025-08-03T00:00:00.000Z"
+    },
+    {
+      "id": "streak_20",
+      "name": "无敌状态",
+      "description": "连续答对20题",
+      "type": "streak",
+      "level": "platinum",
+      "icon": "👑",
+      "condition": {
+        "type": "correct_streak",
+        "target": 20
+      },
+      "rewards": {
+        "points": 300,
+        "title": "无敌答题者"
+      },
+      "isActive": true,
+      "unlockRate": 3,
+      "createdAt": "2025-08-03T00:00:00.000Z"
+    },
+    {
+      "id": "speed_3s",
+      "name": "闪电反应",
+      "description": "3秒内答对题目",
+      "type": "speed",
+      "level": "silver",
+      "icon": "⚡",
+      "condition": {
+        "type": "answer_speed",
+        "target": 3,
+        "unit": "seconds"
+      },
+      "rewards": {
+        "points": 25,
+        "title": "闪电侠"
+      },
+      "isActive": true,
+      "unlockRate": 65,
+      "createdAt": "2025-08-03T00:00:00.000Z"
+    },
+    {
+      "id": "speed_1s",
+      "name": "光速答题",
+      "description": "1秒内答对题目",
+      "type": "speed",
+      "level": "diamond",
+      "icon": "🚀",
+      "condition": {
+        "type": "answer_speed",
+        "target": 1,
+        "unit": "seconds"
+      },
+      "rewards": {
+        "points": 100,
+        "title": "光速答题者"
+      },
+      "isActive": true,
+      "unlockRate": 8,
+      "createdAt": "2025-08-03T00:00:00.000Z"
+    },
+    {
+      "id": "accuracy_100",
+      "name": "完美准确率",
+      "description": "单场答题准确率100%",
+      "type": "accuracy",
+      "level": "gold",
+      "icon": "🎯",
+      "condition": {
+        "type": "session_accuracy",
+        "target": 100
+      },
+      "rewards": {
+        "points": 150,
+        "title": "神枪手"
+      },
+      "isActive": true,
+      "unlockRate": 15,
+      "createdAt": "2025-08-03T00:00:00.000Z"
+    },
+    {
+      "id": "accuracy_90",
+      "name": "高准确率",
+      "description": "单场答题准确率90%以上",
+      "type": "accuracy",
+      "level": "silver",
+      "icon": "🏹",
+      "condition": {
+        "type": "session_accuracy",
+        "target": 90
+      },
+      "rewards": {
+        "points": 80,
+        "title": "精准射手"
+      },
+      "isActive": true,
+      "unlockRate": 28,
+      "createdAt": "2025-08-03T00:00:00.000Z"
+    },
+    {
+      "id": "theme_master",
+      "name": "主题大师",
+      "description": "在某个主题上答对20题",
+      "type": "theme",
+      "level": "platinum",
+      "icon": "🏆",
+      "condition": {
+        "type": "theme_mastery",
+        "target": 20
+      },
+      "rewards": {
+        "points": 250,
+        "title": "主题专家"
+      },
+      "isActive": true,
+      "unlockRate": 5,
+      "createdAt": "2025-08-03T00:00:00.000Z"
+    },
+    {
+      "id": "speed_demon",
+      "name": "速度恶魔",
+      "description": "在10秒内连续答对5题",
+      "type": "speed",
+      "level": "diamond",
+      "icon": "👹",
+      "condition": {
+        "type": "speed_streak",
+        "target": 5,
+        "timeLimit": 10
+      },
+      "rewards": {
+        "points": 200,
+        "title": "速度恶魔"
+      },
+      "isActive": true,
+      "unlockRate": 2,
+      "createdAt": "2025-08-03T00:00:00.000Z"
+    },
+    {
+      "id": "marathon_100",
+      "name": "马拉松选手",
+      "description": "累计完成100题答题",
+      "type": "answer",
+      "level": "gold",
+      "icon": "🏃",
+      "condition": {
+        "type": "answer_count",
+        "target": 100
+      },
+      "rewards": {
+        "points": 500,
+        "title": "马拉松选手"
+      },
+      "isActive": true,
+      "unlockRate": 18,
+      "createdAt": "2025-08-03T00:00:00.000Z"
+    },
+    {
+      "id": "night_owl",
+      "name": "夜猫子",
+      "description": "在晚上10点后答题并答对10题",
+      "type": "time",
+      "level": "bronze",
+      "icon": "🦉",
+      "condition": {
+        "type": "time_based",
+        "target": 10,
+        "timeRange": "22:00-06:00"
+      },
+      "rewards": {
+        "points": 40,
+        "title": "夜猫子"
+      },
+      "isActive": true,
+      "unlockRate": 25,
+      "createdAt": "2025-08-03T00:00:00.000Z"
+    },
+    {
+      "id": "early_bird",
+      "name": "早起鸟儿",
+      "description": "在早上6点后答题并答对10题",
+      "type": "time",
+      "level": "bronze",
+      "icon": "🐦",
+      "condition": {
+        "type": "time_based",
+        "target": 10,
+        "timeRange": "06:00-09:00"
+      },
+      "rewards": {
+        "points": 40,
+        "title": "早起鸟儿"
+      },
+      "isActive": true,
+      "unlockRate": 30,
+      "createdAt": "2025-08-03T00:00:00.000Z"
+    }
+  ],
+  "statistics": {
+    "totalAchievements": 15,
+    "activeAchievements": 15,
+    "bronzeCount": 6,
+    "silverCount": 5,
+    "goldCount": 3,
+    "platinumCount": 2,
+    "diamondCount": 2,
+    "lastUpdated": "2025-08-03T00:00:00.000Z"
+  }
+}

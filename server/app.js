@@ -46,6 +46,8 @@ const USERS_FILE = path.join(DATA_DIR, 'users.json');
 const QUESTIONS_FILE = path.join(DATA_DIR, 'questions.json');
 const ANSWERS_FILE = path.join(DATA_DIR, 'answers.json');
 const LEADERBOARD_FILE = path.join(DATA_DIR, 'leaderboard.json');
+const ACHIEVEMENTS_FILE = path.join(DATA_DIR, 'achievements.json');
+const USER_ACHIEVEMENTS_FILE = path.join(DATA_DIR, 'user-achievements.json');
 
 // 确保数据目录和文件存在
 async function initializeDataFiles() {
@@ -55,7 +57,9 @@ async function initializeDataFiles() {
         users: [],
         questions: [],
         answers: [],
-        leaderboard: []
+        leaderboard: [],
+        achievements: [],
+        userAchievements: []
     };
     
     if (!await fs.pathExists(USERS_FILE)) {
@@ -69,6 +73,12 @@ async function initializeDataFiles() {
     }
     if (!await fs.pathExists(LEADERBOARD_FILE)) {
         await fs.writeJson(LEADERBOARD_FILE, defaultData.leaderboard);
+    }
+    if (!await fs.pathExists(ACHIEVEMENTS_FILE)) {
+        await fs.writeJson(ACHIEVEMENTS_FILE, defaultData.achievements);
+    }
+    if (!await fs.pathExists(USER_ACHIEVEMENTS_FILE)) {
+        await fs.writeJson(USER_ACHIEVEMENTS_FILE, defaultData.userAchievements);
     }
 }
 
@@ -148,6 +158,18 @@ app.get('/leaderboard', (req, res) => {
     res.sendFile(path.join(__dirname, '../public/leaderboard.html'));
 });
 
+app.get('/achievements', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/achievements.html'));
+});
+
+app.get('/test-achievements', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/test-achievements.html'));
+});
+
+app.get('/demo', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/demo.html'));
+});
+
 // 获取访问地址
 function getAccessURL() {
     // 云部署环境
@@ -188,6 +210,11 @@ app.get('/api/questions', async (req, res) => {
     res.json(questions);
 });
 
+app.get('/api/answers', async (req, res) => {
+    const answers = await readJsonFile(ANSWERS_FILE);
+    res.json(answers);
+});
+
 app.post('/api/questions', upload.single('image'), async (req, res) => {
     try {
         const { title, options, correctAnswer, category, difficulty } = req.body;
@@ -225,6 +252,160 @@ app.get('/api/leaderboard', async (req, res) => {
         .slice(0, 5);
     res.json(topFive);
 });
+
+// 成就系统API
+app.get('/api/achievements', async (req, res) => {
+    try {
+        const achievements = await readJsonFile(ACHIEVEMENTS_FILE);
+        res.json(achievements.achievements || []);
+    } catch (error) {
+        console.error('Error getting achievements:', error);
+        res.status(500).json({ error: 'Failed to get achievements' });
+    }
+});
+
+app.get('/api/user-achievements/:userId', async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const userAchievements = await readJsonFile(USER_ACHIEVEMENTS_FILE);
+        const userAchievementList = userAchievements.filter(ua => ua.userId === userId);
+        res.json(userAchievementList);
+    } catch (error) {
+        console.error('Error getting user achievements:', error);
+        res.status(500).json({ error: 'Failed to get user achievements' });
+    }
+});
+
+app.post('/api/check-achievements', async (req, res) => {
+    try {
+        const { userId, action, data } = req.body;
+        const achievements = await readJsonFile(ACHIEVEMENTS_FILE);
+        const userAchievements = await readJsonFile(USER_ACHIEVEMENTS_FILE);
+        const answers = await readJsonFile(ANSWERS_FILE);
+        
+        const newlyUnlocked = [];
+        
+        // 检查每个成就的条件
+        for (const achievement of achievements.achievements) {
+            if (!achievement.isActive) continue;
+            
+            // 检查用户是否已经解锁此成就
+            const alreadyUnlocked = userAchievements.find(ua => 
+                ua.userId === userId && ua.achievementId === achievement.id
+            );
+            if (alreadyUnlocked) continue;
+            
+            let isUnlocked = false;
+            
+            // 根据成就类型检查条件
+            switch (achievement.condition.type) {
+                case 'answer_count':
+                    const userAnswers = answers.filter(a => a.userId === userId);
+                    isUnlocked = userAnswers.length >= achievement.condition.target;
+                    break;
+                    
+                case 'correct_streak':
+                    const correctAnswers = answers.filter(a => a.userId === userId && a.isCorrect);
+                    isUnlocked = checkCorrectStreak(correctAnswers, achievement.condition.target);
+                    break;
+                    
+                case 'answer_speed':
+                    const speedAnswers = answers.filter(a => a.userId === userId && a.isCorrect);
+                    isUnlocked = speedAnswers.some(a => {
+                        const answerTime = new Date(a.answerTime);
+                        const questionTime = new Date(data.questionTime || answerTime);
+                        const timeDiff = (answerTime - questionTime) / 1000;
+                        return timeDiff <= achievement.condition.target;
+                    });
+                    break;
+                    
+                case 'session_accuracy':
+                    const sessionAnswers = answers.filter(a => a.userId === userId);
+                    if (sessionAnswers.length > 0) {
+                        const correctCount = sessionAnswers.filter(a => a.isCorrect).length;
+                        const accuracy = (correctCount / sessionAnswers.length) * 100;
+                        isUnlocked = accuracy >= achievement.condition.target;
+                    }
+                    break;
+                    
+                case 'time_based':
+                    const timeAnswers = answers.filter(a => {
+                        if (a.userId !== userId || !a.isCorrect) return false;
+                        const answerTime = new Date(a.answerTime);
+                        const hour = answerTime.getHours();
+                        const [startHour, startMin] = achievement.condition.timeRange.split('-')[0].split(':').map(Number);
+                        const [endHour, endMin] = achievement.condition.timeRange.split('-')[1].split(':').map(Number);
+                        
+                        const answerMinutes = hour * 60 + answerTime.getMinutes();
+                        const startMinutes = startHour * 60 + startMin;
+                        const endMinutes = endHour * 60 + endMin;
+                        
+                        if (startMinutes <= endMinutes) {
+                            return answerMinutes >= startMinutes && answerMinutes <= endMinutes;
+                        } else {
+                            return answerMinutes >= startMinutes || answerMinutes <= endMinutes;
+                        }
+                    });
+                    isUnlocked = timeAnswers.length >= achievement.condition.target;
+                    break;
+            }
+            
+            if (isUnlocked) {
+                const newUserAchievement = {
+                    id: uuidv4(),
+                    userId,
+                    achievementId: achievement.id,
+                    unlockedAt: new Date().toISOString(),
+                    progress: 100,
+                    notified: false
+                };
+                
+                userAchievements.push(newUserAchievement);
+                newlyUnlocked.push(achievement);
+                
+                // 发送成就解锁通知
+                io.emit('achievement-unlocked', {
+                    userId,
+                    achievement,
+                    userAchievement: newUserAchievement
+                });
+            }
+        }
+        
+        if (newlyUnlocked.length > 0) {
+            await writeJsonFile(USER_ACHIEVEMENTS_FILE, userAchievements);
+        }
+        
+        res.json({ newlyUnlocked });
+    } catch (error) {
+        console.error('Error checking achievements:', error);
+        res.status(500).json({ error: 'Failed to check achievements' });
+    }
+});
+
+// 检查连续答对
+function checkCorrectStreak(correctAnswers, target) {
+    if (correctAnswers.length < target) return false;
+    
+    let currentStreak = 1;
+    let maxStreak = 1;
+    
+    for (let i = 1; i < correctAnswers.length; i++) {
+        const currentTime = new Date(correctAnswers[i].answerTime);
+        const prevTime = new Date(correctAnswers[i - 1].answerTime);
+        const timeDiff = (currentTime - prevTime) / 1000 / 60; // 分钟差
+        
+        // 如果时间差在5分钟内，认为是连续的
+        if (timeDiff <= 5) {
+            currentStreak++;
+            maxStreak = Math.max(maxStreak, currentStreak);
+        } else {
+            currentStreak = 1;
+        }
+    }
+    
+    return maxStreak >= target;
+}
 
 // Socket.IO 连接处理
 io.on('connection', (socket) => {
@@ -568,6 +749,7 @@ async function startServer() {
         console.log(`👨‍💼 Admin panel: ${baseUrl}/admin`);
         console.log(`🎯 Quiz page: ${baseUrl}/quiz`);
         console.log(`🏆 Leaderboard: ${baseUrl}/leaderboard`);
+        console.log(`🏅 Achievements: ${baseUrl}/achievements`);
         console.log(`📋 Share this link: ${baseUrl}/quiz`);
 
         if (process.env.NODE_ENV === 'production') {

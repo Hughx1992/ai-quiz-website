@@ -1,0 +1,50 @@
+[
+  {
+    "id": "4cc0bf0a-4c53-48f2-bab1-892ce43a26e3",
+    "userId": "87371cfc-944b-4929-a87a-8e95165a8d41",
+    "achievementId": "first_answer",
+    "unlockedAt": "2025-08-03T14:12:02.250Z",
+    "progress": 100,
+    "notified": false
+  },
+  {
+    "id": "09720bf0-fbdd-49cb-ab0a-2afd4892019c",
+    "userId": "87371cfc-944b-4929-a87a-8e95165a8d41",
+    "achievementId": "speed_3s",
+    "unlockedAt": "2025-08-03T14:12:02.251Z",
+    "progress": 100,
+    "notified": false
+  },
+  {
+    "id": "4c921b52-6b99-4ea7-9342-6ea15dea2d39",
+    "userId": "87371cfc-944b-4929-a87a-8e95165a8d41",
+    "achievementId": "speed_1s",
+    "unlockedAt": "2025-08-03T14:12:02.252Z",
+    "progress": 100,
+    "notified": false
+  },
+  {
+    "id": "fc02dddd-c177-4b8e-94fe-689e36a1f955",
+    "userId": "87371cfc-944b-4929-a87a-8e95165a8d41",
+    "achievementId": "accuracy_100",
+    "unlockedAt": "2025-08-03T14:12:02.252Z",
+    "progress": 100,
+    "notified": false
+  },
+  {
+    "id": "d10bf8b6-ed8e-4dab-ab08-0e481a2e205a",
+    "userId": "87371cfc-944b-4929-a87a-8e95165a8d41",
+    "achievementId": "accuracy_90",
+    "unlockedAt": "2025-08-03T14:12:02.252Z",
+    "progress": 100,
+    "notified": false
+  },
+  {
+    "id": "24d0db30-449b-4a60-9e6a-4b9e30659624",
+    "userId": "87371cfc-944b-4929-a87a-8e95165a8d41",
+    "achievementId": "streak_5",
+    "unlockedAt": "2025-08-03T14:17:03.299Z",
+    "progress": 100,
+    "notified": false
+  }
+]
